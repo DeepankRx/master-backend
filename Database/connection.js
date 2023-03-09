@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URI = 'mongodb://localhost:27017/erp';
+const URI = 'mongodb+srv://deepank:passwordforbot@cluster0.wopim.mongodb.net/Master?retryWrites=true&w=majority';
 
 mongoose
   .connect(URI, {
