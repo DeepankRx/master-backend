@@ -4,7 +4,7 @@ exports.getAllItemGroupMaster = async (req, res) => {
   try {
     const itemGroupMaster = await ItemGroupMaster.find();
     return res.status(200).json({
-      status: 'success',
+      status: 'success 1',
       results: itemGroupMaster.length,
       data: {
         itemGroupMaster,
@@ -13,7 +13,7 @@ exports.getAllItemGroupMaster = async (req, res) => {
   } catch (err) {
     return res.status(404).json({
       status: 'fail',
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -37,38 +37,20 @@ exports.getItemGroupMaster = async (req, res) => {
   } catch (err) {
     return res.status(404).json({
       status: 'fail',
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 exports.createItemGroupMaster = async (req, res) => {
   try {
-    const {
-      cat_code,
-
-      cat_name,
-      cat_type,
-      cat_main_code,
-      cat_main,
-      supermain_code,
-      delete_option,
-      other,
-      other_num,
-      gst_tax_slab,
-    } = req.body;
+    const { itemGroupName, gstTaxSlab, mainOrSubGroup, subGroup } = req.body;
 
     const newItemGroupMaster = await ItemGroupMaster.create({
-      cat_code,
-      cat_name,
-      cat_type,
-      cat_main_code,
-      cat_main,
-      supermain_code,
-      delete_option,
-      other,
-      other_num,
-      gst_tax_slab,
+      itemGroupName,
+      gstTaxSlab,
+      mainOrSubGroup,
+      subGroup,
     });
 
     return res.status(201).json({
@@ -80,79 +62,66 @@ exports.createItemGroupMaster = async (req, res) => {
   } catch (err) {
     return res.status(400).json({
       status: 'fail',
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 exports.updateItemGroupMaster = async (req, res) => {
-    try{
-    const {
-        cat_code,
-        cat_name,
-        cat_type,
-        cat_main_code,
-        cat_main,
-        supermain_code,
-        delete_option,
-        other,
-        other_num,
-        gst_tax_slab,
-    }   = req.body;
+  try {
+    const { itemGroupName, gstTaxSlab, mainOrSubGroup, subGroup } = req.body;
     const { id } = req.params;
-    const ItemGroupMaster = await ItemGroupMaster.findByIdAndUpdate(id, {
-        cat_code,
-        cat_name,
-        cat_type,
-        cat_main_code,
-        cat_main,
-        supermain_code,
-        delete_option,
-        other,
-        other_num,
-        gst_tax_slab,
-    }, {
+    const itemGroupMaster = await ItemGroupMaster.findByIdAndUpdate(
+      id,
+      {
+        itemGroupName,
+        gstTaxSlab,
+        mainOrSubGroup,
+        subGroup,
+      },
+      {
         new: true,
         runValidators: true,
-    });
-    if (!ItemGroupMaster) {
-            return res.status(404).json({
-                status: 'fail',
-                message: 'No ItemGroupMaster found with that ID',
-            });
-        }
-        return res.status(200).json({
-            status: 'success',
-            data: {
-                ItemGroupMaster,
-            },
-        });
-    } catch (err) {
-        return res.status(404).json({
-            status: 'fail',
-            message: err.message
-        });
+      }
+    );
+    if (!itemGroupMaster) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No ItemGroupMaster found with that ID',
+      });
     }
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        itemGroupMaster,
+      },
+    });
+  } catch (err) {
+    return res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
 };
 
 exports.deleteItemGroupMaster = async (req, res) => {
-    try{
-        const { id } = req.params;
-        const ItemGroupMaster = await ItemGroupMaster.findByIdAndDelete(id);
-        if (!ItemGroupMaster) {
-            return res.status(404).json({
-                status: 'fail',
-                message: 'No ItemGroupMaster found with that ID',
-            });
-        }
-        return res.status(204).json({
-            status: 'success',
-            data: null,
-        });
-    } catch (err) {
-        return res.status(404).json({
-            status: 'fail',
-            message: err.message
-        });
+  try {
+    const { id } = req.params;
+    const itemGroupMaster = await ItemGroupMaster.findByIdAndDelete(id);
+    if (!itemGroupMaster) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No ItemGroupMaster found with that ID',
+      });
     }
+    return res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
 };

@@ -4,7 +4,7 @@ const cors = require('cors');
 require('./Database/connection');
 const AccountGroupMaster = require('./routers/AccountGroupMaster');
 const ItemGroupMaster = require('./routers/ItemGroupMaster');
-const ItemMaster = require('./routers/ItemMaster');
+const ItemCategory = require('./routers/ItemCategory');
 const ItemTrn = require('./routers/ItemTrn');
 const PartyMaster = require('./routers/PartyMaster');
 const PartyTrn = require('./routers/PartyTrn');
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', AccountGroupMaster);
 app.use('/ItemGroupMaster', ItemGroupMaster);
-app.use('/ItemMaster', ItemMaster);
+app.use('/api', ItemCategory);
 app.use('/ItemTrn', ItemTrn);
 app.use('/api', PartyMaster);
 app.use('/PartyTrn', PartyTrn);
